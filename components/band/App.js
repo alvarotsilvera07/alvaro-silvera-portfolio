@@ -45,13 +45,11 @@ export default function App() {
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
                 Alvaro Silvera
               </h1>
-              
               <h2 className="text-2xl md:text-3xl lg:text-4xl text-orange-500 mb-8 font-medium">
-                Full Stack Developer
+                Software Developer
               </h2>
-              
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                Programador Universitario en Sistemas con perfil full stack.<br />
+                Programador Universitario en Sistemas con perfil "Junior Full Stack Developer".<br />
                 Desarrollo soluciones web combinando frontend, backend y bases de datos, siempre en constante aprendizaje.
               </p>
             </div>
@@ -85,14 +83,16 @@ export default function App() {
 
             {/* BOTÓN DESCARGAR CV */}
             <div>
-              <a
-                href="/cv/cv-alvaro-silvera.pdf"
-                download="cv-alvaro-silvera.pdf"
-                className="inline-flex items-center gap-4 px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xl rounded-xl transition-all transform hover:scale-105 shadow-2xl"
-              >
-                <Download size={32} />
-                Descargar CV
-              </a>
+<a
+  href="/cv/cv-alvaro-silvera.pdf"          // ← exactamente este nombre
+  download="cv-alvaro-silvera.pdf"          // ← nombre que se descarga
+  target="_blank"                           // ayuda a forzar descarga correcta
+  rel="noopener noreferrer"
+  className="inline-flex items-center gap-4 px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xl rounded-xl transition-all transform hover:scale-105 shadow-2xl"
+>
+  <Download size={32} />
+  Descargar CV
+</a>
             </div>
           </div>
         </div>
