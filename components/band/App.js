@@ -49,7 +49,7 @@ export default function App() {
                 Software Developer
               </h2>
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                Programador Universitario en Sistemas con perfil "Junior Full Stack Developer".<br />
+                Programador Universitario en Sistemas con perfil Junior Full Stack Developer.<br />
                 Desarrollo soluciones web combinando frontend, backend y bases de datos, siempre en constante aprendizaje.
               </p>
             </div>
