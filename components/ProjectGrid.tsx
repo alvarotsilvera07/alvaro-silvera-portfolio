@@ -33,7 +33,7 @@ export default function ProjectGrid() {
         <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-[0.2em] inline-flex items-center justify-center gap-3">
           Proyectos
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
-            Recientes
+            Realizados
           </span>
           {/* El cursor naranja que parpadea */}
           <span className="w-2 h-10 bg-orange-500 animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(249,115,22,0.6)]"></span>
