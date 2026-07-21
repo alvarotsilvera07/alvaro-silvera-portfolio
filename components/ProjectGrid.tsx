@@ -26,7 +26,7 @@ const projects = [
 
 export default function ProjectGrid() {
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto">
+    <section id="proyectos" className="py-24 px-6 max-w-7xl mx-auto scroll-mt-20">
       
       {/* TÍTULO CON EFECTO DE TERMINAL Y DEGRADADO */}
       <div className="text-center mb-16">

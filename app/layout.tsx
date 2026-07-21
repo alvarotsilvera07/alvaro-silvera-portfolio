@@ -6,7 +6,15 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Alvaro Silvera - PORTFOLIO',
-  description: 'portfolio 3D card',
+  description: 'Software Developer Portfolio — Alvaro Silvera',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' }
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({
@@ -15,10 +23,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={inter.className}>
         {children}
-        </body>
+      </body>
     </html>
-  )
+  );
 }
+
