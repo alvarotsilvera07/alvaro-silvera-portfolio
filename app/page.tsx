@@ -19,21 +19,21 @@ export default function Home() {
       <ProjectGrid />
 
       {/* Sección de contacto / Footer (#contacto) */}
-      <footer id="contacto" className="border-t border-zinc-900 bg-zinc-950/80 py-12 px-6">
+      <footer id="contacto" className="border-t border-zinc-900 bg-zinc-950/80 py-12 px-6 text-center md:text-left">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-zinc-400 text-sm">
           <div>
             <p className="font-bold text-white text-base">Alvaro Silvera</p>
             <p className="text-zinc-500">Software Developer — Portfolio 2026</p>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="mailto:alvarotsilvera2@gmail.com" className="hover:text-orange-500 transition-colors">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+            <a href="mailto:alvarotsilvera2@gmail.com" className="hover:text-orange-500 transition-colors break-all">
               alvarotsilvera2@gmail.com
             </a>
-            <span>•</span>
+            <span className="hidden sm:inline text-zinc-700">•</span>
             <a href="https://github.com/alvarotsilvera07" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition-colors">
               GitHub
             </a>
-            <span>•</span>
+            <span className="hidden sm:inline text-zinc-700">•</span>
             <a href="https://www.linkedin.com/in/alvaro-silvera-6b32a5251/" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition-colors">
               LinkedIn
             </a>
