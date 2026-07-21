@@ -388,7 +388,7 @@ export default function ProjectGrid() {
         {/* Section Header (Centered) */}
         <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center">
           <p className="font-mono text-xs md:text-sm tracking-[0.5em] uppercase text-[#c81d25] mb-4 font-bold text-center w-full">
-            // AHORA EN CARTELERA //
+            {"// AHORA EN CARTELERA //"}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-[0.2em] inline-flex items-center justify-center gap-3 w-full text-center">
             Proyectos
