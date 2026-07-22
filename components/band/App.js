@@ -50,7 +50,7 @@ export default function App() {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 lg:p-16">
           <div className="max-w-md mx-auto lg:mx-0 space-y-12">
             <div>
-              <h1 className={`${bebasNeue.className} text-6xl md:text-7xl lg:text-8xl tracking-widest mb-2 text-cinema-fg leading-none`}>
+              <h1 className={`${bebasNeue.className} text-5xl sm:text-7xl lg:text-8xl tracking-widest mb-2 text-cinema-fg leading-none`}>
                 Alvaro Silvera
               </h1>
               <h2 className="text-2xl md:text-3xl lg:text-4xl text-cinema-gold mb-8 font-medium">

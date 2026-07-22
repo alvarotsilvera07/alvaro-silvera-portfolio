@@ -388,12 +388,12 @@ export default function ProjectGrid() {
           <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase bg-cinema-red text-cinema-fg px-3 py-1 rounded-sm mb-5 font-bold shadow-md shadow-cinema-red/10">
             AHORA EN CARTELERA
           </span>
-          <h2 className="text-5xl md:text-6xl font-bebas text-cinema-fg uppercase tracking-widest inline-flex items-center justify-center gap-4 w-full text-center leading-none">
-            Proyectos
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cinema-gold-light to-cinema-gold">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bebas text-cinema-fg uppercase tracking-widest flex flex-wrap items-center justify-center gap-x-4 gap-y-2 w-full text-center leading-tight">
+            <span>Proyectos</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cinema-gold-light to-cinema-gold inline-flex items-center gap-2">
               Realizados
+              <span className="w-1.5 h-8 sm:h-10 md:h-12 bg-cinema-gold animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(200,155,92,0.5)] inline-block"></span>
             </span>
-            <span className="w-1.5 h-12 bg-cinema-gold animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(200,155,92,0.5)]"></span>
           </h2>
         </div>
       </div>

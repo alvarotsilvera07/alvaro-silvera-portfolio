@@ -18,13 +18,7 @@ export default function Home() {
 
       {/* Sección de contacto / Footer (#contacto) */}
       <footer id="contacto" className="border-t border-stone-900/80 bg-stone-950/50 py-16 px-6 text-center md:text-left relative overflow-hidden">
-        {/* Ambient background movie ending watermark */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0" aria-hidden="true">
-          <span className="font-bebas text-[14vw] md:text-[12vw] tracking-[0.25em] text-stone-900/50 opacity-15">
-            FIN
-          </span>
-        </div>
-        
+
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-stone-400 text-sm relative z-10">
           <div>
             <p className="font-bold text-cinema-fg text-base">Alvaro Silvera</p>
