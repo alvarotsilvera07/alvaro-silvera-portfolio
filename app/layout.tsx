@@ -1,8 +1,18 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Bebas_Neue } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bebas-neue',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Alvaro Silvera - PORTFOLIO',
@@ -23,8 +33,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
-      <body className={inter.className}>
+    <html lang="es" className={`${inter.variable} ${bebasNeue.variable}`}>
+      <body className={`${inter.className} relative overflow-x-hidden`}>
+        <div className="film-grain" />
         {children}
       </body>
     </html>

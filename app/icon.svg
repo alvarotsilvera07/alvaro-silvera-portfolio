@@ -1,9 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
-  <!-- Letter A in white -->
-  <path d="M 120 380 L 210 130 L 260 130 L 320 380 L 265 380 L 248 320 L 175 320 L 160 380 Z M 190 270 L 235 270 L 212 185 Z" fill="#ffffff"/>
-  <!-- Letter S in white -->
-  <path d="M 330 310 C 330 365 260 385 210 370 L 210 325 C 245 338 285 330 285 305 C 285 280 230 275 230 230 C 230 180 295 165 340 180 L 340 225 C 310 212 275 220 275 242 C 275 268 330 270 330 310 Z" fill="#ffffff"/>
-  <!-- Orange dot -->
-  <circle cx="430" cy="360" r="28" fill="#ff6b00"/>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="4" fill="#0A0A0A"/>
+  <text x="16" y="22" font-family="Arial, sans-serif" font-weight="700" font-size="15"
+        fill="#C89B5C" text-anchor="middle">AS.</text>
 </svg>

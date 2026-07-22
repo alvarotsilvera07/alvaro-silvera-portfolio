@@ -7,8 +7,15 @@ import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei
 import { Physics, RigidBody, BallCollider, CuboidCollider, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import { Github, Linkedin, Mail, Instagram, Download } from 'lucide-react';
+import { Bebas_Neue } from 'next/font/google';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
+
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const GLTF_PATH = '/assets/kartu.glb';
 const ROPE_TEXTURE_PATH = '/assets/bandd.png';
@@ -20,17 +27,17 @@ useTexture.preload(ROPE_TEXTURE_PATH);
 export default function App() {
   return (
     <>
-      <div className="min-h-screen bg-black text-white flex flex-col lg:flex-row">
+      <div className="min-h-screen bg-cinema-bg text-cinema-fg flex flex-col lg:flex-row">
         
         {/* TARJETA 3D - Arriba en móvil, derecha en desktop */}
         <div className="w-full lg:w-1/2 h-96 lg:h-screen relative order-first lg:order-last">
           <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
+            <color attach="background" args={['#0A0A0A']} />
             <ambientLight intensity={Math.PI} />
             <Physics interpolate gravity={[0, -40, 0]} timeStep={1/60}>
               <Band />
             </Physics>
-            <Environment background blur={0.75}>
-              <color attach="background" args={['black']} />
+            <Environment blur={0.75}>
               <Lightformer intensity={2} color="white" position={[0, -1, 5]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
               <Lightformer intensity={3} color="white" position={[-1, -1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
               <Lightformer intensity={3} color="white" position={[1, 1, 1]} rotation={[0, 0, Math.PI / 3]} scale={[100, 0.1, 1]} />
@@ -43,13 +50,13 @@ export default function App() {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 lg:p-16">
           <div className="max-w-md mx-auto lg:mx-0 space-y-12">
             <div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4">
+              <h1 className={`${bebasNeue.className} text-6xl md:text-7xl lg:text-8xl tracking-widest mb-2 text-cinema-fg leading-none`}>
                 Alvaro Silvera
               </h1>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl text-orange-500 mb-8 font-medium">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl text-cinema-gold mb-8 font-medium">
                 Software Developer
               </h2>
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+              <p className="text-lg md:text-xl text-stone-300 leading-relaxed">
                 Programador Universitario en Sistemas con perfil Junior Full Stack Developer.<br />
                 Desarrollo soluciones web combinando frontend, backend y bases de datos, siempre en constante aprendizaje.
               </p>
@@ -58,27 +65,27 @@ export default function App() {
             {/* REDES SOCIALES */}
             <div className="flex flex-wrap gap-6">
               <a href="https://github.com/alvarotsilvera07" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                className="flex items-center gap-3 text-stone-400 hover:text-cinema-gold transition-colors">
                 <Github size={28} />
-                <span className="text-lg">GitHub</span>
+                <span className="text-lg font-mono text-xs uppercase tracking-wider">GitHub</span>
               </a>
 
               <a href="https://www.linkedin.com/in/alvaro-silvera-6b32a5251/" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                className="flex items-center gap-3 text-stone-400 hover:text-cinema-gold transition-colors">
                 <Linkedin size={28} />
-                <span className="text-lg">LinkedIn</span>
+                <span className="text-lg font-mono text-xs uppercase tracking-wider">LinkedIn</span>
               </a>
 
               <a href="mailto:alvarotsilvera2@gmail.com"
-                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                className="flex items-center gap-3 text-stone-400 hover:text-cinema-gold transition-colors">
                 <Mail size={28} />
-                <span className="text-lg">Email</span>
+                <span className="text-lg font-mono text-xs uppercase tracking-wider">Email</span>
               </a>
 
-              <a href="https://www.instagram.com/alvarosilvera07" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/alvarosilvera07/" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 text-stone-400 hover:text-cinema-gold transition-colors">
                 <Instagram size={28} />
-                <span className="text-lg">Instagram</span>
+                <span className="text-lg font-mono text-xs uppercase tracking-wider">Instagram</span>
               </a>
             </div>
 
@@ -89,9 +96,9 @@ export default function App() {
                 download="cv-alvaro-silvera.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-bold text-base md:text-lg rounded-xl transition-all transform hover:scale-105 shadow-xl"
+                className="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-cinema-gold hover:bg-cinema-gold-light text-cinema-bg font-bold text-base md:text-lg rounded-xl transition-all transform hover:scale-105 shadow-xl select-none"
               >
-                <Download size={20} />
+                <Download size={20} className="text-cinema-bg" />
                 <span>Descargar CV (ES)</span>
               </a>
 
@@ -100,9 +107,9 @@ export default function App() {
                 download="CV_Alvaro_Tomas_Silvera_EN.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-zinc-950 border-2 border-orange-500 hover:bg-orange-500/10 text-white font-bold text-base md:text-lg rounded-xl transition-all transform hover:scale-105 shadow-xl"
+                className="inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-stone-950 border-2 border-cinema-gold hover:bg-cinema-gold/10 text-cinema-fg font-bold text-base md:text-lg rounded-xl transition-all transform hover:scale-105 shadow-xl select-none"
               >
-                <Download size={20} />
+                <Download size={20} className="text-cinema-gold" />
                 <span>Download CV (EN)</span>
               </a>
             </div>

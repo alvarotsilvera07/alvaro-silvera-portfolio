@@ -4,25 +4,24 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #0A0A0A;
 }
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 245, 243, 238; /* #F5F3EE */
+  --background-start-rgb: 10, 10, 10;  /* #0A0A0A */
+  --background-end-rgb: 10, 10, 10;
 }
 
 body {
   margin: 0px;
-  background-color: #0f0f0f;
+  background-color: #0A0A0A;
+  color: #F5F3EE;
+}
+
+::selection {
+  background-color: rgba(200, 155, 92, 0.3); /* #C89B5C with opacity */
+  color: #F5F3EE;
 }
 
 .descriptions {
@@ -35,7 +34,7 @@ body {
 }
 
 .description {
-  background-color: #ec4e39;
+  background-color: #8B2E2E; /* Changed from orange-red to cinema-red */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,5 +42,33 @@ body {
   padding-right: 10%;
   clip-path: inset(50% 0 50%);
   transition: clip-path 0.4s;
+}
+
+@keyframes grain {
+  0%, 100% { transform:translate(0, 0) }
+  10% { transform:translate(-1%, -1%) }
+  20% { transform:translate(-2%, 1%) }
+  30% { transform:translate(1%, -2%) }
+  40% { transform:translate(-1%, 3%) }
+  50% { transform:translate(1%, 1%) }
+  60% { transform:translate(-2%, 2%) }
+  70% { transform:translate(2%, 1%) }
+  80% { transform:translate(1%, -1%) }
+  90% { transform:translate(-1%, 1%) }
+}
+
+.film-grain {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noise)"/%3E%3C/svg%3E') repeat;
+  opacity: 0.035; /* Subtle 3.5% opacity */
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
 }
 

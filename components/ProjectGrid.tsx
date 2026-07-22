@@ -121,7 +121,7 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
         target="_blank"
         rel="noopener noreferrer"
         onMouseMove={handleMouseMove}
-        className="relative block aspect-[2/3] w-full rounded-xl overflow-hidden cursor-pointer border border-zinc-800 bg-zinc-950 transition-all duration-300 group-hover:border-orange-500/50 shadow-2xl select-none"
+        className="relative block aspect-[2/3] w-full rounded-xl overflow-hidden cursor-pointer border border-stone-900 bg-stone-950 transition-all duration-300 group-hover:border-cinema-gold/50 shadow-2xl select-none"
         style={{
           transform: isTouchDevice || isReducedMotion 
             ? 'none' 
@@ -129,14 +129,6 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
           transformStyle: isTouchDevice || isReducedMotion ? 'flat' : 'preserve-3d',
         }}
       >
-        {/* Live Status Badge */}
-        {project.isLive && (
-          <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 bg-zinc-950/60 border border-zinc-800/80 px-2.5 py-1 rounded font-mono text-[9px] tracking-[0.2em] text-emerald-400 backdrop-blur-sm shadow-md select-none">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-[pulse_1.5s_infinite] shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
-            EN VIVO
-          </div>
-        )}
-
         {/* Background Image of the poster */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <img
@@ -148,10 +140,10 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
             }}
           />
           {/* Cinematic Color Tint overlay (duotone effect) */}
-          <div className="absolute inset-0 bg-orange-600/10 mix-blend-color transition-colors duration-500 group-hover:bg-orange-500/5" />
+          <div className="absolute inset-0 bg-cinema-gold/5 mix-blend-color transition-colors duration-500 group-hover:bg-cinema-gold/2" />
           
           {/* Vignette/Shadow overlay - darker only at the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-95" />
+          <div className="absolute inset-0 bg-gradient-to-t from-cinema-bg via-cinema-bg/40 to-transparent opacity-95" />
         </div>
 
         {/* Poster Content */}
@@ -159,41 +151,47 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
           className="relative z-10 h-full flex flex-col justify-between p-6 select-none" 
           style={{ transform: isTouchDevice || isReducedMotion ? 'none' : 'translateZ(30px)' }}
         >
-          <div className="text-center">
-            <p className="text-[9px] font-mono tracking-[0.35em] text-zinc-500 uppercase">
+          <div className="flex justify-between items-center w-full">
+            <p className="text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
               {project.badge}
             </p>
+            {project.isLive && (
+              <div className="flex items-center gap-1 bg-stone-950/80 border border-stone-800 px-2 py-0.5 rounded font-mono text-[8px] tracking-[0.1em] text-cinema-fg select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-cinema-red animate-[pulse_1.5s_infinite] shadow-[0_0_6px_rgba(139,46,46,0.8)]" />
+                EN CARTELERA
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col items-center">
-            <h3 className={`${bebasNeue.className} ${getFontSize(project.title)} text-white text-center leading-none tracking-wide group-hover:text-orange-500 transition-colors duration-300`}>
+            <h3 className={`${bebasNeue.className} ${getFontSize(project.title)} text-cinema-fg text-center leading-none tracking-wide group-hover:text-cinema-gold transition-colors duration-300`}>
               {project.title}
             </h3>
-            <p className="text-[9px] font-mono tracking-[0.2em] text-zinc-500 mt-2 uppercase">
+            <p className="text-[9px] font-mono tracking-[0.2em] text-stone-550 mt-2 uppercase">
               UN PROYECTO DE ALVARO SILVERA
             </p>
           </div>
 
           <div className="flex justify-center">
-            <span className="text-[10px] font-mono tracking-widest text-zinc-400 border border-zinc-800 px-2 py-0.5 rounded uppercase bg-zinc-900/30">
+            <span className="text-[10px] font-mono tracking-widest text-stone-400 border border-stone-800 px-2 py-0.5 rounded uppercase bg-stone-900/30">
               {project.classification}
             </span>
           </div>
         </div>
 
-        {/* Orange spotlight tracking mouse */}
+        {/* Amber spotlight tracking mouse */}
         {!isReducedMotion && !isTouchDevice && hovered && (
           <div
             className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-300"
             style={{
-              background: `radial-gradient(circle 120px at ${spotlight.x}px ${spotlight.y}px, rgba(249, 115, 22, 0.15), transparent 80%)`
+              background: `radial-gradient(circle 120px at ${spotlight.x}px ${spotlight.y}px, rgba(200, 155, 92, 0.12), transparent 80%)`
             }}
           />
         )}
 
         {/* Trailer indicator overlay */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-          <span className="bg-orange-600/95 text-white font-mono text-xs tracking-[0.2em] px-4 py-2 rounded-full border border-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.4)] opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 flex items-center gap-1.5">
+          <span className="bg-cinema-gold text-cinema-bg font-mono font-bold text-xs tracking-[0.2em] px-4 py-2 rounded-full border border-cinema-gold-light shadow-[0_0_15px_rgba(200,155,92,0.4)] opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 flex items-center gap-1.5">
             ▶ VER PROYECTO
           </span>
         </div>
@@ -202,7 +200,7 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
       {/* Details underneath the poster */}
       <div className="mt-5 px-1 flex-1 flex flex-col justify-between">
         <div>
-          <p className="text-zinc-400 text-sm leading-relaxed mb-4 h-16 overflow-hidden text-ellipsis">
+          <p className="text-stone-400 text-sm leading-relaxed mb-4 h-16 overflow-hidden text-ellipsis">
             {project.description}
           </p>
           
@@ -211,7 +209,7 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
             {project.tags.map((tag, i) => (
               <span
                 key={i}
-                className="text-[9px] font-mono tracking-wider text-orange-500/80 border border-orange-500/20 px-2 py-0.5 rounded"
+                className="text-[9px] font-mono tracking-wider text-cinema-gold border border-cinema-gold/20 px-2 py-0.5 rounded bg-stone-950/20"
               >
                 {tag}
               </span>
@@ -223,7 +221,7 @@ function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardPro
           href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-white font-semibold text-xs hover:text-orange-500 transition-colors self-start group/link"
+          className="inline-flex items-center gap-2 text-cinema-fg font-semibold text-xs hover:text-cinema-gold transition-colors self-start group/link"
         >
           Ver Detalles del Proyecto
           <span className="group-hover/link:translate-x-1 transition-transform">→</span>
@@ -358,7 +356,7 @@ export default function ProjectGrid() {
   const totalIndexStr = (projects.length + 1).toString().padStart(2, '0'); // +1 accounts for the coming soon card
 
   return (
-    <section className="py-24 max-w-full overflow-hidden bg-black relative">
+    <section className="py-24 max-w-full overflow-hidden bg-cinema-bg relative">
       <style dangerouslySetInnerHTML={{__html: `
         #filmstrip-track::-webkit-scrollbar {
           display: none;
@@ -366,36 +364,36 @@ export default function ProjectGrid() {
       `}} />
 
       {/* Decorative Top Perforation Row with Integrated Counter */}
-      <div className="w-full h-8 bg-zinc-950 flex items-center justify-between overflow-hidden mb-12 opacity-80 select-none border-y border-zinc-900 px-6 md:px-12 relative">
+      <div className="w-full h-8 bg-stone-950 flex items-center justify-between overflow-hidden mb-12 opacity-80 select-none border-y border-stone-900 px-6 md:px-12 relative">
         <div 
           className="absolute inset-x-0 h-2 top-3 pointer-events-none" 
           style={{
-            backgroundImage: 'linear-gradient(to right, #27272a 0px, #27272a 12px, transparent 12px, transparent 24px)',
+            backgroundImage: 'linear-gradient(to right, #2e2b26 0px, #2e2b26 12px, transparent 12px, transparent 24px)',
             backgroundSize: '24px 100%'
           }} 
         />
         {/* Film Roll Counter integrated on the right side */}
-        <div className="relative z-10 ml-auto bg-zinc-950 border border-zinc-800 px-3 py-0.5 rounded font-mono text-[10px] tracking-widest text-zinc-400 flex items-center gap-1.5 shadow-inner">
-          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
-          <span className="text-zinc-500 font-bold">ROLL</span>
-          <span className="text-white font-bold">{activeIndexStr}</span>
-          <span className="text-zinc-600">/</span>
-          <span className="text-zinc-400">{totalIndexStr}</span>
+        <div className="relative z-10 ml-auto bg-stone-950 border border-stone-800/80 px-3 py-0.5 rounded font-mono text-[10px] tracking-widest text-stone-400 flex items-center gap-1.5 shadow-inner">
+          <span className="w-1.5 h-1.5 rounded-full bg-cinema-gold animate-pulse shadow-[0_0_8px_rgba(200,155,92,0.6)]" />
+          <span className="text-stone-500 font-bold">ROLL</span>
+          <span className="text-cinema-fg font-bold">{activeIndexStr}</span>
+          <span className="text-stone-600">/</span>
+          <span className="text-stone-400">{totalIndexStr}</span>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Section Header (Centered) */}
         <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center">
-          <p className="font-mono text-xs md:text-sm tracking-[0.5em] uppercase text-[#c81d25] mb-4 font-bold text-center w-full">
-            {"// AHORA EN CARTELERA //"}
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-[0.2em] inline-flex items-center justify-center gap-3 w-full text-center">
+          <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase bg-cinema-red text-cinema-fg px-3 py-1 rounded-sm mb-5 font-bold shadow-md shadow-cinema-red/10">
+            AHORA EN CARTELERA
+          </span>
+          <h2 className="text-5xl md:text-6xl font-bebas text-cinema-fg uppercase tracking-widest inline-flex items-center justify-center gap-4 w-full text-center leading-none">
             Proyectos
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cinema-gold-light to-cinema-gold">
               Realizados
             </span>
-            <span className="w-2 h-10 bg-orange-500 animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(249,115,22,0.6)]"></span>
+            <span className="w-1.5 h-12 bg-cinema-gold animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(200,155,92,0.5)]"></span>
           </h2>
         </div>
       </div>
@@ -409,9 +407,9 @@ export default function ProjectGrid() {
         <button
           onClick={() => handleScrollClick('left')}
           disabled={!showLeftArrow}
-          className={`absolute left-4 md:left-8 z-30 top-[35%] -translate-y-1/2 bg-zinc-950/85 text-zinc-400 border border-zinc-800 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
+          className={`absolute left-4 md:left-8 z-30 top-[35%] -translate-y-1/2 bg-stone-950/85 text-stone-400 border border-stone-850 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
             showLeftArrow 
-              ? 'opacity-100 hover:bg-orange-600 hover:text-white hover:border-orange-500 cursor-pointer pointer-events-auto' 
+              ? 'opacity-100 hover:bg-cinema-gold hover:text-cinema-bg hover:border-cinema-gold cursor-pointer pointer-events-auto' 
               : 'opacity-20 cursor-not-allowed pointer-events-none'
           }`}
           aria-label="Anterior"
@@ -423,9 +421,9 @@ export default function ProjectGrid() {
         <button
           onClick={() => handleScrollClick('right')}
           disabled={!showRightArrow}
-          className={`absolute right-4 md:right-8 z-30 top-[35%] -translate-y-1/2 bg-zinc-950/85 text-zinc-400 border border-zinc-800 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
+          className={`absolute right-4 md:right-8 z-30 top-[35%] -translate-y-1/2 bg-stone-950/85 text-stone-400 border border-stone-850 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
             showRightArrow 
-              ? 'opacity-100 hover:bg-orange-600 hover:text-white hover:border-orange-500 cursor-pointer pointer-events-auto' 
+              ? 'opacity-100 hover:bg-cinema-gold hover:text-cinema-bg hover:border-cinema-gold cursor-pointer pointer-events-auto' 
               : 'opacity-20 cursor-not-allowed pointer-events-none'
           }`}
           aria-label="Siguiente"
@@ -459,25 +457,25 @@ export default function ProjectGrid() {
 
           {/* Coming Soon Decorative Placeholder Card */}
           <div className="w-[285px] md:w-[350px] flex-shrink-0 snap-center flex flex-col group select-none opacity-60">
-            <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden border border-dashed border-zinc-800 bg-zinc-950/40 flex flex-col justify-between p-6 shadow-xl">
+            <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden border border-dashed border-stone-800 bg-stone-950/40 flex flex-col justify-between p-6 shadow-xl">
               <div className="text-center">
-                <p className="text-[9px] font-mono tracking-[0.35em] text-zinc-600 uppercase">
+                <p className="text-[9px] font-mono tracking-[0.35em] text-stone-600 uppercase">
                   EN PRODUCCIÓN
                 </p>
               </div>
 
               <div className="flex flex-col items-center">
-                <h3 className={`${bebasNeue.className} text-4xl md:text-5xl text-zinc-500 text-center leading-none tracking-wide uppercase select-none`}>
+                <h3 className={`${bebasNeue.className} text-4xl md:text-5xl text-stone-500 text-center leading-none tracking-wide uppercase select-none`}>
                   PRÓXIMO ESTRENO
                 </h3>
-                <div className="w-8 h-[1px] bg-zinc-850 my-4" />
-                <p className="text-[9px] font-mono tracking-[0.2em] text-zinc-600 uppercase">
+                <div className="w-8 h-[1px] bg-stone-850 my-4" />
+                <p className="text-[9px] font-mono tracking-[0.2em] text-stone-600 uppercase">
                   NUEVAS IDEAS & CÓDIGO
                 </p>
               </div>
 
               <div className="flex justify-center">
-                <span className="text-[10px] font-mono tracking-widest text-zinc-600 border border-dashed border-zinc-800 px-2 py-0.5 rounded uppercase">
+                <span className="text-[10px] font-mono tracking-widest text-stone-600 border border-dashed border-stone-800 px-2 py-0.5 rounded uppercase">
                   COMING SOON
                 </span>
               </div>
@@ -485,24 +483,24 @@ export default function ProjectGrid() {
 
             <div className="mt-5 px-1 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-4 h-16">
+                <p className="text-stone-500 text-sm leading-relaxed mb-4 h-16">
                   Diseñando y desarrollando nuevos sistemas y experiencias digitales. La cartelera se mantiene en constante crecimiento.
                 </p>
                 
                 <div className="flex flex-wrap gap-1.5 mb-5">
-                  <span className="text-[9px] font-mono tracking-wider text-zinc-700 border border-zinc-800 px-2 py-0.5 rounded">
+                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
                     Ideas
                   </span>
-                  <span className="text-[9px] font-mono tracking-wider text-zinc-700 border border-zinc-800 px-2 py-0.5 rounded">
+                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
                     SaaS
                   </span>
-                  <span className="text-[9px] font-mono tracking-wider text-zinc-700 border border-zinc-800 px-2 py-0.5 rounded">
+                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
                     AI
                   </span>
                 </div>
               </div>
               
-              <span className="text-zinc-600 font-semibold text-xs">
+              <span className="text-stone-600 font-semibold text-xs">
                 Próximamente
               </span>
             </div>
@@ -511,11 +509,11 @@ export default function ProjectGrid() {
       </div>
 
       {/* Decorative Bottom Perforation Row */}
-      <div className="w-full h-4 bg-zinc-950 flex items-center overflow-hidden mt-12 opacity-40 select-none border-y border-zinc-900">
+      <div className="w-full h-4 bg-stone-950 flex items-center overflow-hidden mt-12 opacity-40 select-none border-y border-stone-900">
         <div 
           className="w-full h-2 bg-repeat-x" 
           style={{
-            backgroundImage: 'linear-gradient(to right, #27272a 0px, #27272a 12px, transparent 12px, transparent 24px)',
+            backgroundImage: 'linear-gradient(to right, #2e2b26 0px, #2e2b26 12px, transparent 12px, transparent 24px)',
             backgroundSize: '24px 100%'
           }} 
         />
