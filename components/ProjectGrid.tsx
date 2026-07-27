@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Bebas_Neue } from 'next/font/google';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Code } from 'lucide-react';
 
 const bebasNeue = Bebas_Neue({
   weight: '400',
@@ -52,277 +52,78 @@ const projects = [
   }
 ];
 
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link: string;
-  classification: string;
-  objectPosition?: string;
-  badge: string;
-  isLive?: boolean;
-}
-
-interface ProjectCardProps {
-  project: Project;
-  isTouchDevice: boolean;
-  isReducedMotion: boolean;
-}
-
-function ProjectCard({ project, isTouchDevice, isReducedMotion }: ProjectCardProps) {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [spotlight, setSpotlight] = useState({ x: 0, y: 0 });
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isReducedMotion || isTouchDevice) return;
-    
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const width = rect.width;
-    const height = rect.height;
-    
-    // Subtly tilt max 10 degrees
-    const rotateX = ((y - height / 2) / height) * -10;
-    const rotateY = ((x - width / 2) / width) * 10;
-    
-    setTilt({ x: rotateX, y: rotateY });
-    setSpotlight({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-    setHovered(false);
-  };
-
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  // Helper to scale font size depending on title length
-  const getFontSize = (title: string) => {
-    if (title.length > 20) return 'text-2xl md:text-3xl lg:text-4xl';
-    if (title.length > 12) return 'text-3xl md:text-4xl lg:text-5xl';
-    return 'text-4xl md:text-5xl lg:text-6xl';
-  };
-
-  return (
-    <div
-      className="w-[285px] md:w-[350px] flex-shrink-0 snap-center flex flex-col group transition-all duration-300"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Clickable Poster */}
-      <a
-        href={project.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        onMouseMove={handleMouseMove}
-        className="relative block aspect-[2/3] w-full rounded-xl overflow-hidden cursor-pointer border border-stone-900 bg-stone-950 transition-all duration-300 group-hover:border-cinema-gold/50 shadow-2xl select-none"
-        style={{
-          transform: isTouchDevice || isReducedMotion 
-            ? 'none' 
-            : `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transformStyle: isTouchDevice || isReducedMotion ? 'flat' : 'preserve-3d',
-        }}
-      >
-        {/* Background Image of the poster */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-700 ease-out grayscale contrast-125 brightness-90 group-hover:scale-105"
-            style={{
-              objectPosition: project.objectPosition || 'center'
-            }}
-          />
-          {/* Cinematic Color Tint overlay (duotone effect) */}
-          <div className="absolute inset-0 bg-cinema-gold/5 mix-blend-color transition-colors duration-500 group-hover:bg-cinema-gold/2" />
-          
-          {/* Vignette/Shadow overlay - darker only at the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-cinema-bg via-cinema-bg/40 to-transparent opacity-95" />
-        </div>
-
-        {/* Poster Content */}
-        <div 
-          className="relative z-10 h-full flex flex-col justify-between p-6 select-none" 
-          style={{ transform: isTouchDevice || isReducedMotion ? 'none' : 'translateZ(30px)' }}
-        >
-          <div className="flex justify-between items-center w-full">
-            <p className="text-[9px] font-mono tracking-[0.25em] text-stone-500 uppercase">
-              {project.badge}
-            </p>
-            {project.isLive && (
-              <div className="flex items-center gap-1 bg-stone-950/80 border border-stone-800 px-2 py-0.5 rounded font-mono text-[8px] tracking-[0.1em] text-cinema-fg select-none">
-                <span className="w-1.5 h-1.5 rounded-full bg-cinema-red animate-[pulse_1.5s_infinite] shadow-[0_0_6px_rgba(139,46,46,0.8)]" />
-                EN CARTELERA
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-col items-center">
-            <h3 className={`${bebasNeue.className} ${getFontSize(project.title)} text-cinema-fg text-center leading-none tracking-wide group-hover:text-cinema-gold transition-colors duration-300`}>
-              {project.title}
-            </h3>
-            <p className="text-[9px] font-mono tracking-[0.2em] text-stone-550 mt-2 uppercase">
-              UN PROYECTO DE ALVARO SILVERA
-            </p>
-          </div>
-
-          <div className="flex justify-center">
-            <span className="text-[10px] font-mono tracking-widest text-stone-400 border border-stone-800 px-2 py-0.5 rounded uppercase bg-stone-900/30">
-              {project.classification}
-            </span>
-          </div>
-        </div>
-
-        {/* Amber spotlight tracking mouse */}
-        {!isReducedMotion && !isTouchDevice && hovered && (
-          <div
-            className="absolute inset-0 pointer-events-none z-20 transition-opacity duration-300"
-            style={{
-              background: `radial-gradient(circle 120px at ${spotlight.x}px ${spotlight.y}px, rgba(200, 155, 92, 0.12), transparent 80%)`
-            }}
-          />
-        )}
-
-        {/* Trailer indicator overlay */}
-        <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-          <span className="bg-cinema-gold text-cinema-bg font-mono font-bold text-xs tracking-[0.2em] px-4 py-2 rounded-full border border-cinema-gold-light shadow-[0_0_15px_rgba(200,155,92,0.4)] opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 flex items-center gap-1.5">
-            ▶ VER PROYECTO
-          </span>
-        </div>
-      </a>
-
-      {/* Details underneath the poster */}
-      <div className="mt-5 px-1 flex-1 flex flex-col justify-between">
-        <div>
-          <p className="text-stone-400 text-sm leading-relaxed mb-4 h-16 overflow-hidden text-ellipsis">
-            {project.description}
-          </p>
-          
-          {/* Tech tags styled as movie credits */}
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {project.tags.map((tag, i) => (
-              <span
-                key={i}
-                className="text-[9px] font-mono tracking-wider text-cinema-gold border border-cinema-gold/20 px-2 py-0.5 rounded bg-stone-950/20"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-cinema-fg font-semibold text-xs hover:text-cinema-gold transition-colors self-start group/link"
-        >
-          Ver Detalles del Proyecto
-          <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-        </a>
-      </div>
-    </div>
-  );
-}
-
 export default function ProjectGrid() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [animatingState, setAnimatingState] = useState<'idle' | 'ejecting' | 'inserting'>('idle');
+  const [displayIndex, setDisplayIndex] = useState(0);
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Touch and motion preference detection
-  useEffect(() => {
-    // Touch detection matching media queries
-    const mediaQueryTouch = window.matchMedia('(hover: hover) and (pointer: fine)');
-    setIsTouchDevice(!mediaQueryTouch.matches);
-    const touchListener = (e: MediaQueryListEvent) => setIsTouchDevice(!e.matches);
-    mediaQueryTouch.addEventListener('change', touchListener);
-
-    // Reduced motion detection
-    const mediaQueryMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReducedMotion(mediaQueryMotion.matches);
-    const motionListener = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
-    mediaQueryMotion.addEventListener('change', motionListener);
-
-    return () => {
-      mediaQueryTouch.removeEventListener('change', touchListener);
-      mediaQueryMotion.removeEventListener('change', motionListener);
-    };
-  }, []);
-
-  // Scroll spy to update the roll index + arrow visibility
-  useEffect(() => {
+  // Check scroll container arrows
+  const checkArrows = () => {
     const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const cardElements = Array.from(container.children).filter(
-        child => child.classList.contains('snap-center')
-      );
-      if (cardElements.length === 0) return;
-      
-      const firstCard = cardElements[0] as HTMLElement;
-      const cardWidth = firstCard.clientWidth;
-      const gap = 32; // gap-8 is 32px
-      const step = cardWidth + gap;
-
-      // Calculate active index based on card step positions
-      const index = Math.round(container.scrollLeft / step);
-      const clampedIndex = Math.max(0, Math.min(index, cardElements.length - 1));
-      
-      setActiveIndex(clampedIndex);
-
-      // Check arrows visibility
+    if (container) {
       setShowLeftArrow(container.scrollLeft > 10);
       setShowRightArrow(container.scrollLeft < container.scrollWidth - container.clientWidth - 10);
-    };
+    }
+  };
 
-    container.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    
-    // Trigger scroll spy on mount
-    handleScroll();
-
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
+  useEffect(() => {
+    checkArrows();
+    window.addEventListener('resize', checkArrows);
+    return () => window.removeEventListener('resize', checkArrows);
   }, []);
 
-  // Scroll click handler
   const handleScrollClick = (direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const currentScroll = container.scrollLeft;
-    const cardElements = Array.from(container.children).filter(
-      child => child.classList.contains('snap-center')
-    );
-    if (cardElements.length === 0) return;
-    
-    const firstCard = cardElements[0] as HTMLElement;
-    const cardWidth = firstCard.clientWidth;
-    const gap = 32; // gap-8 is 32px
-    const step = cardWidth + gap;
-
+    const step = 312; // Cartridge width (280px) + gap (32px)
     const targetScroll = direction === 'left' 
-      ? currentScroll - step 
-      : currentScroll + step;
+      ? container.scrollLeft - step 
+      : container.scrollLeft + step;
 
     container.scrollTo({
       left: targetScroll,
       behavior: 'smooth'
     });
+    
+    // Give smooth scroll some time before verifying arrow state
+    setTimeout(checkArrows, 300);
   };
+
+  const selectProject = (index: number) => {
+    if (index === displayIndex || animatingState !== 'idle') return;
+    
+    // Smoothly scroll container to center the active cartridge
+    const container = scrollContainerRef.current;
+    if (container) {
+      const step = 312;
+      const scrollPosition = index * step - (container.clientWidth / 2) + 140; // 140 is half cartridge width
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+      setTimeout(checkArrows, 300);
+    }
+
+    setAnimatingState('ejecting');
+    
+    // Phase 1: Eject cartridge out of slot (200ms)
+    setTimeout(() => {
+      setDisplayIndex(index);
+      setAnimatingState('inserting');
+      
+      // Phase 2: Insert new cartridge (250ms)
+      setTimeout(() => {
+        setAnimatingState('idle');
+      }, 250);
+    }, 200);
+  };
+
+  const currentProject = projects[displayIndex];
 
   // Drag-to-scroll implementation
   const isDown = useRef(false);
@@ -350,173 +151,312 @@ export default function ProjectGrid() {
     const x = e.pageX - scrollContainerRef.current.offsetLeft;
     const walk = (x - startX.current) * 1.5;
     scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
+    checkArrows();
   };
 
-  const activeIndexStr = (activeIndex + 1).toString().padStart(2, '0');
-  const totalIndexStr = (projects.length + 1).toString().padStart(2, '0'); // +1 accounts for the coming soon card
-
   return (
-    <section className="py-24 max-w-full overflow-hidden bg-cinema-bg relative">
-      <style dangerouslySetInnerHTML={{__html: `
-        #filmstrip-track::-webkit-scrollbar {
-          display: none;
-        }
-      `}} />
-
-      {/* Decorative Top Perforation Row with Integrated Counter */}
-      <div className="w-full h-8 bg-stone-950 flex items-center justify-between overflow-hidden mb-12 opacity-80 select-none border-y border-stone-900 px-6 md:px-12 relative">
-        <div 
-          className="absolute inset-x-0 h-2 top-3 pointer-events-none" 
-          style={{
-            backgroundImage: 'linear-gradient(to right, #2e2b26 0px, #2e2b26 12px, transparent 12px, transparent 24px)',
-            backgroundSize: '24px 100%'
-          }} 
-        />
-        {/* Film Roll Counter integrated on the right side */}
-        <div className="relative z-10 ml-auto bg-stone-950 border border-stone-800/80 px-3 py-0.5 rounded font-mono text-[10px] tracking-widest text-stone-400 flex items-center gap-1.5 shadow-inner">
-          <span className="w-1.5 h-1.5 rounded-full bg-cinema-gold animate-pulse shadow-[0_0_8px_rgba(200,155,92,0.6)]" />
-          <span className="text-stone-500 font-bold">ROLL</span>
-          <span className="text-cinema-fg font-bold">{activeIndexStr}</span>
-          <span className="text-stone-600">/</span>
-          <span className="text-stone-400">{totalIndexStr}</span>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative">
-        {/* Section Header (Centered) */}
-        <div className="text-center mb-16 max-w-3xl mx-auto flex flex-col items-center">
-          <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase bg-cinema-red text-cinema-fg px-3 py-1 rounded-sm mb-5 font-bold shadow-md shadow-cinema-red/10">
-            AHORA EN CARTELERA
-          </span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bebas text-cinema-fg uppercase tracking-widest flex flex-wrap items-center justify-center gap-x-4 gap-y-2 w-full text-center leading-tight">
-            <span>Proyectos</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cinema-gold-light to-cinema-gold inline-flex items-center gap-2">
-              Realizados
-              <span className="w-1.5 h-8 sm:h-10 md:h-12 bg-cinema-gold animate-[pulse_1.2s_infinite] shadow-[0_0_15px_rgba(200,155,92,0.5)] inline-block"></span>
-            </span>
-          </h2>
-        </div>
-      </div>
-
-      {/* Scroll Anchor */}
+    <section className="py-24 max-w-full overflow-hidden bg-famicom-bg relative">
       <div id="proyectos" className="scroll-mt-28" />
 
-      {/* Track Wrapper with Navigation Arrows */}
-      <div className="relative w-full group/track">
-        {/* Left Scroll Arrow */}
-        <button
-          onClick={() => handleScrollClick('left')}
-          disabled={!showLeftArrow}
-          className={`absolute left-4 md:left-8 z-30 top-[35%] -translate-y-1/2 bg-stone-950/85 text-stone-400 border border-stone-850 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
-            showLeftArrow 
-              ? 'opacity-100 hover:bg-cinema-gold hover:text-cinema-bg hover:border-cinema-gold cursor-pointer pointer-events-auto' 
-              : 'opacity-20 cursor-not-allowed pointer-events-none'
-          }`}
-          aria-label="Anterior"
-        >
-          <ChevronLeft size={24} className="md:w-6 md:h-6 w-5 h-5" />
-        </button>
+      {/* Main Console Interface Container */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center mb-12 flex flex-col items-center select-none">
+          <span className="font-mono text-[10px] md:text-xs tracking-[0.3em] bg-famicom-red text-famicom-body px-3 py-1 rounded-sm mb-4 font-bold shadow-md flex items-center gap-1.5">
+            <span>PROJECT DECK SELECTOR</span>
+            <span className="text-[8px] opacity-60 font-normal">デッキ</span>
+          </span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bebas text-white uppercase tracking-widest leading-tight">
+            Proyectos Realizados
+          </h2>
+        </div>
 
-        {/* Right Scroll Arrow */}
-        <button
-          onClick={() => handleScrollClick('right')}
-          disabled={!showRightArrow}
-          className={`absolute right-4 md:right-8 z-30 top-[35%] -translate-y-1/2 bg-stone-950/85 text-stone-400 border border-stone-850 p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur shadow-[0_0_15px_rgba(0,0,0,0.6)] active:scale-95 flex items-center justify-center ${
-            showRightArrow 
-              ? 'opacity-100 hover:bg-cinema-gold hover:text-cinema-bg hover:border-cinema-gold cursor-pointer pointer-events-auto' 
-              : 'opacity-20 cursor-not-allowed pointer-events-none'
-          }`}
-          aria-label="Siguiente"
-        >
-          <ChevronRight size={24} className="md:w-6 md:h-6 w-5 h-5" />
-        </button>
+        {/* 1. THE CONSOLE MONITOR (Selected Project Detail Panel) */}
+        <div className="famicom-matte-texture border-4 border-stone-400/40 p-4 sm:p-8 rounded-3xl shadow-2xl flex flex-col border-b-[8px] border-r-[6px] mb-12 relative">
+          
+          {/* Decorative Console Label */}
+          <div className="absolute top-3 left-6 hidden sm:flex items-center gap-1.5 opacity-35 select-none">
+            <span className="w-1.5 h-1.5 rounded-full bg-famicom-red-light" />
+            <span className="font-mono text-[8px] font-bold text-stone-700 tracking-wider">VIDEO OUTPUT 01</span>
+          </div>
 
-        {/* Horizontal Scrolleable Track */}
-        <div
-          id="filmstrip-track"
-          ref={scrollContainerRef}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseLeaveOrUp}
-          onMouseLeave={handleMouseLeaveOrUp}
-          onMouseMove={handleMouseMoveContainer}
-          tabIndex={0}
-          className="flex overflow-x-auto gap-8 py-4 scrollbar-none snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing focus:outline-none px-6 md:px-12 lg:px-16 xl:px-[calc((100vw-1280px)/2+24px)]"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {projects.map((project, index) => (
-            <ProjectCard 
-              key={index} 
-              project={project} 
-              isTouchDevice={isTouchDevice} 
-              isReducedMotion={isReducedMotion} 
-            />
-          ))}
+          <div className="famicom-crt-screen p-5 sm:p-8 border-[6px] sm:border-8 border-stone-850 rounded-2xl flex flex-col lg:flex-row gap-8 items-stretch relative min-h-[320px]">
+            
+            {/* Screen Info (Left / Main Panel) */}
+            <div className="w-full lg:w-2/3 flex flex-col justify-between z-10">
+              <div>
+                <div className="flex flex-wrap items-center gap-3 mb-3 text-[10px] font-mono text-famicom-gold/80 tracking-widest uppercase border-b border-stone-900 pb-2 select-none">
+                  <span className="flex items-center gap-1">
+                    <span>PROJECT DETAILS</span>
+                    <span className="text-[7px] opacity-60 font-normal">プロジェクト詳細</span>
+                  </span>
+                  <span>&bull;</span>
+                  <span>{currentProject.badge}</span>
+                  {currentProject.isLive && (
+                    <>
+                      <span>&bull;</span>
+                      <span className="flex items-center gap-1 text-famicom-green font-bold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-famicom-green shadow-[0_0_4px_#4CAF50]" />
+                        ONLINE
+                      </span>
+                    </>
+                  )}
+                </div>
 
-          {/* Coming Soon Decorative Placeholder Card */}
-          <div className="w-[285px] md:w-[350px] flex-shrink-0 snap-center flex flex-col group select-none opacity-60">
-            <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden border border-dashed border-stone-800 bg-stone-950/40 flex flex-col justify-between p-6 shadow-xl">
-              <div className="text-center">
-                <p className="text-[9px] font-mono tracking-[0.35em] text-stone-600 uppercase">
-                  EN PRODUCCIÓN
-                </p>
-              </div>
-
-              <div className="flex flex-col items-center">
-                <h3 className={`${bebasNeue.className} text-4xl md:text-5xl text-stone-500 text-center leading-none tracking-wide uppercase select-none`}>
-                  PRÓXIMO ESTRENO
+                <h3 className={`${bebasNeue.className} text-4xl sm:text-5xl text-white tracking-wider leading-none mb-4`}>
+                  {currentProject.title}
                 </h3>
-                <div className="w-8 h-[1px] bg-stone-850 my-4" />
-                <p className="text-[9px] font-mono tracking-[0.2em] text-stone-600 uppercase">
-                  NUEVAS IDEAS & CÓDIGO
+
+                <p className="text-stone-300 text-sm sm:text-base leading-relaxed mb-6 font-sans">
+                  {currentProject.description}
                 </p>
               </div>
 
-              <div className="flex justify-center">
-                <span className="text-[10px] font-mono tracking-widest text-stone-600 border border-dashed border-stone-800 px-2 py-0.5 rounded uppercase">
-                  COMING SOON
+              {/* Specs & Actions Row */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-4 border-t border-stone-900">
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[9px] font-mono text-stone-500 uppercase tracking-widest select-none">Classification</span>
+                  <span className="text-[10px] font-mono tracking-widest text-famicom-gold border border-famicom-gold/20 px-2 py-0.5 rounded uppercase bg-famicom-red/10 self-start select-none">
+                    {currentProject.classification}
+                  </span>
+                </div>
+
+                {/* Tech specifications styled as game code spec labels */}
+                <div className="flex flex-wrap gap-1.5">
+                  {currentProject.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-[9px] font-mono tracking-wider text-stone-400 border border-stone-850 px-2 py-0.5 rounded bg-stone-950/50 select-none"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Screen Action / Visual Cartridge State (Right Panel) */}
+            <div className="w-full lg:w-1/3 flex flex-col justify-between items-center bg-stone-950/40 rounded-xl p-4 sm:p-6 border border-stone-900 z-10 relative">
+              
+              {/* Eject / Insert slot visualization */}
+              <div className="w-full text-center mb-4 select-none">
+                <span className="font-mono text-[9px] text-stone-500 font-bold block mb-1 uppercase tracking-wider flex items-center justify-center gap-1.5">
+                  <span>CONSOLE DECK STATE</span>
+                  <span className="text-[7px] opacity-60 font-normal">デッキ状態</span>
+                </span>
+                
+                {/* Physical Slot Hole representation */}
+                <div className="famicom-cartridge-slot w-full h-20 max-w-[200px] mx-auto relative overflow-hidden flex items-end justify-center">
+                  
+                  {/* Cartridge sliding element inside console */}
+                  <div 
+                    className={`w-[85%] bg-stone-500 border border-stone-600 rounded-t-md border-b-0 shadow-lg px-2 pt-1 flex flex-col justify-between select-none ${
+                      animatingState === 'ejecting' 
+                        ? 'transform -translate-y-full opacity-0 transition-all duration-200 ease-in' 
+                        : animatingState === 'inserting'
+                        ? 'transform -translate-y-full opacity-0' 
+                        : 'transform translate-y-[20%] opacity-100 transition-all duration-[250ms] ease-out'
+                    }`}
+                    style={{ height: '80%' }}
+                  >
+                    <div className="w-full bg-famicom-red text-[6px] font-mono py-0.5 text-center text-white rounded-t-sm font-bold uppercase overflow-hidden text-ellipsis whitespace-nowrap">
+                      {currentProject.title}
+                    </div>
+                    <div className="bg-stone-650 h-5 w-full rounded-sm opacity-50 flex items-center justify-center">
+                      <span className="w-8 h-0.5 bg-stone-800 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons styled as Game Controllers */}
+              <div className="w-full flex flex-col gap-3 font-mono">
+                {currentProject.link.includes('github.com') ? (
+                  <a
+                    href={currentProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="famicom-tactile-btn-red w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#C0392B] hover:bg-[#D94F3F] text-white text-xs font-bold rounded-xl text-center select-none"
+                  >
+                    <Code size={14} />
+                    <span className="flex items-center gap-1.5">
+                      <span>SELECT: VIEW REPO</span>
+                      <span className="text-[7px] opacity-60">セレクト</span>
+                    </span>
+                  </a>
+                ) : (
+                  <>
+                    <a
+                      href={currentProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="famicom-tactile-btn-red w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#C0392B] hover:bg-[#D94F3F] text-white text-xs font-bold rounded-xl text-center select-none"
+                    >
+                      <Play size={12} fill="white" />
+                      <span className="flex items-center gap-1.5">
+                        <span>START: LAUNCH DEMO</span>
+                        <span className="text-[7px] opacity-60">スタート</span>
+                      </span>
+                    </a>
+                    
+                    <a
+                      href="https://github.com/alvarotsilvera07"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="famicom-tactile-btn w-full flex items-center justify-center gap-2 py-3 px-4 bg-stone-400 text-stone-800 text-xs font-bold rounded-xl text-center select-none border border-stone-500"
+                    >
+                      <Code size={14} className="text-stone-750" />
+                      <span className="flex items-center gap-1.5">
+                        <span>SELECT: GITHUB DECK</span>
+                        <span className="text-[7px] opacity-65">セレクト</span>
+                      </span>
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* 2. THE CARTRIDGE DECK RACK (Horizontal Scroller) */}
+        <div className="relative w-full group/track mt-8 select-none">
+          <span className="font-mono text-[9px] text-stone-500 font-bold tracking-widest mb-4 uppercase text-center sm:text-left flex items-center justify-center sm:justify-start gap-1.5 select-none">
+            <span>CARTRIDGE RACK (SCROLL OR DRAG TO EXPLORE)</span>
+            <span className="text-[7px] opacity-60 font-normal">カートリッジラック</span>
+          </span>
+
+          {/* Left Arrow button - Always visible but styled when disabled */}
+          <button
+            onClick={() => handleScrollClick('left')}
+            disabled={!showLeftArrow}
+            className={`absolute left-0 lg:-left-12 z-30 top-[50%] -translate-y-1/2 bg-stone-900 border border-stone-800 p-2 md:p-3 rounded-full transition-all duration-300 active:scale-95 flex items-center justify-center ${
+              showLeftArrow 
+                ? 'opacity-100 hover:bg-famicom-red-light hover:border-famicom-red-light text-white cursor-pointer' 
+                : 'opacity-20 cursor-not-allowed pointer-events-none text-stone-600'
+            }`}
+            aria-label="Anterior"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          {/* Right Arrow button - Always visible but styled when disabled */}
+          <button
+            onClick={() => handleScrollClick('right')}
+            disabled={!showRightArrow}
+            className={`absolute right-0 lg:-right-12 z-30 top-[50%] -translate-y-1/2 bg-stone-900 border border-stone-800 p-2 md:p-3 rounded-full transition-all duration-300 active:scale-95 flex items-center justify-center ${
+              showRightArrow 
+                ? 'opacity-100 hover:bg-famicom-red-light hover:border-famicom-red-light text-white cursor-pointer' 
+                : 'opacity-20 cursor-not-allowed pointer-events-none text-stone-600'
+            }`}
+            aria-label="Siguiente"
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Scrolleable Container */}
+          <div
+            ref={scrollContainerRef}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseLeaveOrUp}
+            onMouseLeave={handleMouseLeaveOrUp}
+            onMouseMove={handleMouseMoveContainer}
+            className="flex overflow-x-auto gap-8 py-6 scrollbar-none snap-x snap-mandatory scroll-smooth cursor-grab active:cursor-grabbing focus:outline-none px-2"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {projects.map((project, index) => {
+              const isSelected = displayIndex === index;
+              return (
+                <div
+                  key={index}
+                  onClick={() => selectProject(index)}
+                  className={`w-[280px] flex-shrink-0 snap-center transition-all duration-300 transform active:scale-95 cursor-pointer ${
+                    isSelected ? '-translate-y-2' : 'hover:-translate-y-1'
+                  }`}
+                >
+                  {/* Visual Cartridge Body */}
+                  <div className={`w-full bg-[#484850] rounded-xl border border-stone-550 shadow-xl border-b-[8px] border-b-stone-700 flex flex-col relative overflow-hidden ${
+                    isSelected ? 'ring-2 ring-famicom-gold shadow-2xl' : ''
+                  }`}>
+                    
+                    {/* Top Ribs / Ridges details */}
+                    <div className="w-full h-4 bg-stone-700/60 flex justify-between px-6 border-b border-black/15">
+                      <span className="w-3 h-full bg-stone-800/40 border-x border-black/5" />
+                      <span className="w-3 h-full bg-stone-800/40 border-x border-black/5" />
+                      <span className="w-3 h-full bg-stone-800/40 border-x border-black/5" />
+                      <span className="w-3 h-full bg-stone-800/40 border-x border-black/5" />
+                      <span className="w-3 h-full bg-stone-800/40 border-x border-black/5" />
+                    </div>
+
+                    {/* Label/Sticker Container with Gold Accent Border if selected */}
+                    <div className={`p-3 bg-stone-900 flex flex-col justify-between h-[180px] relative border ${
+                      isSelected ? 'border-famicom-gold/50' : 'border-transparent'
+                    }`}>
+                      
+                      {/* Cartridge Title Banner */}
+                      <div className="w-full bg-famicom-red text-[8px] font-mono py-0.5 text-center text-white rounded-t-sm font-bold uppercase overflow-hidden text-ellipsis whitespace-nowrap">
+                        {project.title}
+                      </div>
+
+                      {/* Game Box Art Illustration */}
+                      <div className="w-full h-[95px] rounded bg-stone-950 overflow-hidden relative border border-stone-800">
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className={`w-full h-full object-cover transition-all duration-500 ${
+                            isSelected ? 'scale-105 brightness-95' : 'grayscale brightness-75'
+                          }`}
+                          style={{ objectPosition: project.objectPosition || 'center' }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
+                      </div>
+
+                      {/* Info footer */}
+                      <div className="flex justify-between items-center text-[9px] font-mono text-stone-500 uppercase mt-1">
+                        <span>{project.badge}</span>
+                        <span className="text-[8px] text-famicom-gold font-bold">
+                          {isSelected ? '★ INSERTED' : 'SELECT'}
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Little title below cartridge */}
+                  <div className="mt-3 text-center">
+                    <h4 className={`text-sm font-bold tracking-wide transition-colors ${
+                      isSelected ? 'text-famicom-gold font-black' : 'text-stone-500'
+                    }`}>
+                      {project.title}
+                    </h4>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Coming Soon Cartridge */}
+            <div className="w-[280px] flex-shrink-0 snap-center select-none opacity-45">
+              <div className="w-full bg-[#3B3B42] rounded-xl border border-dashed border-stone-600 shadow-lg border-b-[8px] border-b-stone-800 flex flex-col h-[196px] justify-center items-center p-6 text-center">
+                <span className="font-mono text-[9px] text-stone-500 tracking-[0.2em] block mb-2 uppercase">
+                  IN PRODUCTION
+                </span>
+                <h4 className={`${bebasNeue.className} text-3xl text-stone-400 tracking-wider leading-none uppercase mb-2`}>
+                  Coming Soon
+                </h4>
+                <div className="w-8 h-[1px] bg-stone-700 my-2" />
+                <span className="font-mono text-[8px] text-stone-600 uppercase tracking-widest">
+                  MODEL DMG-08
                 </span>
               </div>
             </div>
-
-            <div className="mt-5 px-1 flex-1 flex flex-col justify-between">
-              <div>
-                <p className="text-stone-500 text-sm leading-relaxed mb-4 h-16">
-                  Diseñando y desarrollando nuevos sistemas y experiencias digitales. La cartelera se mantiene en constante crecimiento.
-                </p>
-                
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
-                    Ideas
-                  </span>
-                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
-                    SaaS
-                  </span>
-                  <span className="text-[9px] font-mono tracking-wider text-stone-700 border border-stone-800 px-2 py-0.5 rounded">
-                    AI
-                  </span>
-                </div>
-              </div>
-              
-              <span className="text-stone-600 font-semibold text-xs">
-                Próximamente
-              </span>
-            </div>
+            
           </div>
         </div>
-      </div>
 
-      {/* Decorative Bottom Perforation Row */}
-      <div className="w-full h-4 bg-stone-950 flex items-center overflow-hidden mt-12 opacity-40 select-none border-y border-stone-900">
-        <div 
-          className="w-full h-2 bg-repeat-x" 
-          style={{
-            backgroundImage: 'linear-gradient(to right, #2e2b26 0px, #2e2b26 12px, transparent 12px, transparent 24px)',
-            backgroundSize: '24px 100%'
-          }} 
-        />
       </div>
     </section>
   );

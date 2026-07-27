@@ -14,6 +14,16 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
+        famicom: {
+          bg: '#0F0F12',
+          body: '#EFE6D8',
+          'body-dark': '#D5C8B4',
+          red: '#9B2B22',
+          'red-light': '#C0392B',
+          gold: '#D4AC0D',
+          green: '#4CAF50',
+          'power-red': '#D03A3A',
+        },
         cinema: {
           bg: '#0A0A0A',
           fg: '#F5F3EE',
