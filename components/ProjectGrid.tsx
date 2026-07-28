@@ -374,13 +374,15 @@ export default function ProjectGrid() {
                 <div
                   key={index}
                   onClick={() => selectProject(index)}
-                  className={`w-[280px] flex-shrink-0 snap-center transition-all duration-300 transform active:scale-95 cursor-pointer ${
-                    isSelected ? '-translate-y-2' : 'hover:-translate-y-1'
+                  className={`w-[280px] flex-shrink-0 snap-center transition-all duration-300 transform active:scale-95 cursor-pointer cartridge-hover ${
+                    isSelected ? '-translate-y-2 cartridge-active' : 'hover:-translate-y-1'
                   }`}
                 >
                   {/* Visual Cartridge Body */}
-                  <div className={`w-full bg-[#484850] rounded-xl border border-stone-550 shadow-xl border-b-[8px] border-b-stone-700 flex flex-col relative overflow-hidden ${
-                    isSelected ? 'ring-2 ring-famicom-gold shadow-2xl' : ''
+                  <div className={`w-full bg-[#484850] rounded-xl border border-stone-550 shadow-xl border-b-[8px] border-b-stone-700 flex flex-col relative overflow-hidden transition-all duration-300 ${
+                    isSelected 
+                      ? 'ring-2 ring-famicom-gold shadow-[0_0_25px_rgba(212,172,13,0.4)]' 
+                      : 'hover:shadow-[0_0_15px_rgba(212,172,13,0.2)]'
                   }`}>
                     
                     {/* Top Ribs / Ridges details */}
@@ -393,7 +395,7 @@ export default function ProjectGrid() {
                     </div>
 
                     {/* Label/Sticker Container with Gold Accent Border if selected */}
-                    <div className={`p-3 bg-stone-900 flex flex-col justify-between h-[180px] relative border ${
+                    <div className={`p-3 bg-stone-900 flex flex-col justify-between h-[180px] relative border transition-colors duration-300 ${
                       isSelected ? 'border-famicom-gold/50' : 'border-transparent'
                     }`}>
                       
@@ -402,17 +404,18 @@ export default function ProjectGrid() {
                         {project.title}
                       </div>
 
-                      {/* Game Box Art Illustration */}
-                      <div className="w-full h-[95px] rounded bg-stone-950 overflow-hidden relative border border-stone-800">
+                      {/* Game Box Art Illustration with Halftone Duotone effects */}
+                      <div className="w-full h-[95px] rounded overflow-hidden relative border border-stone-850 halftone-duotone-container">
                         <img 
                           src={project.image} 
                           alt={project.title}
-                          className={`w-full h-full object-cover transition-all duration-500 ${
-                            isSelected ? 'scale-105 brightness-95' : 'grayscale brightness-75'
+                          className={`w-full h-full object-cover halftone-duotone-img ${
+                            isSelected ? 'scale-105' : 'scale-100'
                           }`}
                           style={{ objectPosition: project.objectPosition || 'center' }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
+                        <div className="halftone-dots-overlay" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-transparent to-transparent pointer-events-none" />
                       </div>
 
                       {/* Info footer */}
@@ -428,7 +431,7 @@ export default function ProjectGrid() {
 
                   {/* Little title below cartridge */}
                   <div className="mt-3 text-center">
-                    <h4 className={`text-sm font-bold tracking-wide transition-colors ${
+                    <h4 className={`text-sm font-bold tracking-wide transition-colors duration-300 ${
                       isSelected ? 'text-famicom-gold font-black' : 'text-stone-500'
                     }`}>
                       {project.title}

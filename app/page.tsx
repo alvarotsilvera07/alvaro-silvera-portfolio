@@ -13,6 +13,13 @@ export default function Home() {
         <App />
       </section>
 
+      {/* Decorative Kanji Watermark (開発者 = Developer) */}
+      <div className="relative w-full h-0 pointer-events-none select-none z-0">
+        <div className="absolute left-[5%] md:left-[8%] -top-[120px] md:-top-[220px] text-[10rem] md:text-[18rem] font-black text-stone-900/10 tracking-tighter leading-none select-none">
+          開発者
+        </div>
+      </div>
+
       {/* Sección de proyectos (#proyectos) */}
       <ProjectGrid />
 

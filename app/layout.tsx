@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${bebasNeue.variable}`}>
       <body className={`${inter.className} relative overflow-x-hidden`}>
-        <div className="film-grain" />
+        <div className="vhs-grain-overlay" />
         {children}
       </body>
     </html>
