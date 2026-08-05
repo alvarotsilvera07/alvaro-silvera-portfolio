@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { Bebas_Neue } from 'next/font/google';
 import { ChevronLeft, ChevronRight, Play, Code } from 'lucide-react';
 
@@ -406,9 +407,11 @@ export default function ProjectGrid() {
 
                       {/* Game Box Art Illustration with Halftone Duotone effects */}
                       <div className="w-full h-[95px] rounded overflow-hidden relative border border-stone-850 halftone-duotone-container">
-                        <img 
+                        <Image 
                           src={project.image} 
                           alt={project.title}
+                          fill
+                          unoptimized
                           className={`w-full h-full object-cover halftone-duotone-img ${
                             isSelected ? 'scale-105' : 'scale-100'
                           }`}
