@@ -19,10 +19,9 @@ export const metadata: Metadata = {
   description: 'Software Developer Portfolio — Alvaro Silvera',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico' }
+      { url: '/icon.png?v=2', type: 'image/png' }
     ],
-    shortcut: '/favicon.svg',
+    shortcut: '/icon.png',
     apple: '/apple-touch-icon.png',
   },
 }
