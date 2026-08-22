@@ -1,27 +1,38 @@
-# Portafolio Personal - Alvaro Silvera
+# 🕹️ Portafolio Personal — Alvaro Silvera
 
-Una tarjeta 3D interactiva con física realista que presenta mi perfil profesional como Full Stack Developer. El proyecto combina React Three Fiber, Rapier y Next.js para crear una experiencia visual única.
+Experiencia web interactiva con estética retro-consola (**Famicom System**) y simulación de física 3D en tiempo real para presentar mi perfil profesional como **Software & Full Stack Developer**.
 
-![Vista principal del portafolio](public/assets/screenshot.png)  
+🔗 **Sitio en vivo:** [alvaro-silvera-portfolio.vercel.app](https://alvaro-silvera-portfolio.vercel.app/)
 
-## Características principales
+---
 
-- Tarjeta 3D colgada con cuerda elástica y física realista
-- Interacción: arrastrar y soltar la tarjeta con el mouse
-- Frente: foto personal | Dorso: diseño inspirado en carta coleccionable Yu-Gi-Oh!
-- Información personal clara y descargable (CV)
-- Diseño responsive (móvil y escritorio)
-- Fondo oscuro moderno con iluminación ambiental
+### ✨ Características Principales
 
-## Tecnologías utilizadas
+* **Tarjeta 3D Interactiva:** Credencial con cuerda elástica, iluminación dinámica y física realista desarrollada con Three.js y Rapier.
+* **Interacción Física:** Arrastre y lanzamiento de la tarjeta en el espacio tridimensional con cursor/touch.
+* **Estética Retro Hardware:** Interfaz inspirada en sistemas clásicos (Famicom/CRT) combinada con UI moderna y modo oscuro.
+* **Doble Cara Dinámica:** Foto personal al frente y reverso coleccionable con detalles temáticos.
+* **Diseño Responsive:** Adaptado para renderizado fluido en pantallas móviles y de escritorio.
 
-- **Next.js** 13+ (App Router)
-- **React Three Fiber** + **Three.js** (renderizado 3D)
-- **@react-three/rapier** (motor de física)
-- **Drei** (helpers para Three.js)
-- **Tailwind CSS** (estilos)
-- **Lucide React** (iconos)
-- TypeScript (tipado parcial)
+---
+
+### 🛠️ Stack Tecnológico
+
+* **Framework:** Next.js (App Router)
+* **Lenguaje:** TypeScript / JavaScript
+* **3D & Gráficos:** React Three Fiber (Three.js) + @react-three/drei
+* **Motor de Física:** @react-three/rapier
+* **Estilos & UI:** Tailwind CSS + Lucide React
+* **Despliegue:** Vercel
+
+---
+
+### 💻 Instalación y Uso Local
+
+1. Clonar el repositorio:
+   ```bash
+   git clone [https://github.com/alvarotsilvera07/alvaro-silvera-portfolio.git](https://github.com/alvarotsilvera07/alvaro-silvera-portfolio.git)
+   cd alvaro-silvera-portfolio
 
 ## Cómo ejecutar el proyecto
 
